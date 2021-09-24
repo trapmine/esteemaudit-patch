@@ -3,7 +3,7 @@ This is a third party patch for EsteemAudit NSA Exploit released in 2017
 
 EsteemAudit exploit sends a fake SmartCard information packet to the vulnerable system. The vulnerable module whcih parses this malformed data , forwards it to memcpy() function.
 
-![alt text](https://trapmine.com/wp-content/uploads/2019/03/mempcy.png)
+<img src="https://trapmine.com/wp-content/uploads/2019/03/mempcy.png"/>
 
 Size parameter of memcpy() func comes from the smartcard pci packet sent by EsteemAudit exploit. 
 
