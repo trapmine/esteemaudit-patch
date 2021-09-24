@@ -7,13 +7,13 @@ EsteemAudit exploit sends a fake SmartCard information packet to the vulnerable 
 
 Size parameter of memcpy() func comes from the smartcard pci packet sent by EsteemAudit exploit. 
 
-![alt text](https://trapmine.com/wp-content/uploads/2019/03/gpkcspbuffer.png)
+![](https://trapmine.com/wp-content/uploads/2019/03/gpkcspbuffer.png)
 
 So the size and source parameters of the memcpy() is controllable by attacker.  The destination of memcpy is a chunk at the size of 0x80 bytes. Thus, it is a simple buffer overflow issue.
 
 To patch this issue , when vulnerable module gpkcsp.dll loaded in memory, we will hook memcpy at this location and will fix its size to 0x80 or even more safer to set it to 0x79 on the fly. To achieve this, after finding the offset of memcpy() in the memory, we should change the opcodes as following;
 
-![alt text](https://trapmine.com/wp-content/uploads/2019/03/movecx80.png)
+![](https://trapmine.com/wp-content/uploads/2019/03/movecx80.png)
 
 So the patch itself will be a DLL to inject into winlogon.exe process. When our DLL injected into the process , it should find offset of vulnerably memcpy first. In our tests, we see that it's always located at gpkcsp+0xE280 offset in Windows2003(SP1/SP2 ENG/TUR editions. We can calculate base address of gpkcsp module and add 0xE280 to find the vulnerable offset;
 
