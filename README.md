@@ -17,13 +17,13 @@ To patch this issue , when vulnerable module gpkcsp.dll loaded in memory, we wil
 
 So the patch itself will be a DLL to inject into winlogon.exe process. When our DLL injected into the process , it should find offset of vulnerably memcpy first. In our tests, we see that it's always located at gpkcsp+0xE280 offset in Windows2003(SP1/SP2 ENG/TUR editions. We can calculate base address of gpkcsp module and add 0xE280 to find the vulnerable offset by using GetModuleHandle api;
 
-![](github.com/trapmine/esteemaudit-patch/raw/main/patchadres.png)
+![](https://github.com/trapmine/esteemaudit-patch/raw/main/patchadres.png)
 
 After finding the offset, it is pretty straightforward. We should change original "mov ecx, dword_8176DDC" code with "mov ecx, 0x80" to fix the vulnerability. To do this , we should first make the memory RWX and then write our bytes to there;
 
-![](github.com/trapmine/esteemaudit-patch/raw/main/patch-opcode.png)
+![](https://github.com/trapmine/esteemaudit-patch/raw/main/patch-opcode.png)
 
 The last step is defining DLLMain() and call CreateThread to run our code inside the injected process;
-![](github.com/trapmine/esteemaudit-patch/raw/main/DllMain.png)
+![](https://github.com/trapmine/esteemaudit-patch/raw/main/DllMain.png)
 
 The patch is that simple. The difficult part is analyzing the vulnerable binary , locating it correctly and deciding on how to patch it.
