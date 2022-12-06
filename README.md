@@ -15,7 +15,7 @@ To patch this issue , when vulnerable module gpkcsp.dll loaded in memory, we wil
 
 ![](https://github.com/trapmine/esteemaudit-patch/raw/main/movecx80.png)
 
-So the patch itself will be a DLL to inject into winlogon.exe process. When our DLL injected into the process , it should find offset of vulnerably memcpy first. In our tests, we see that it's always located at gpkcsp+0xE280 offset in Windows2003(SP1/SP2 ENG/TUR editions. We can calculate base address of gpkcsp module and add 0xE280 to find the vulnerable offset by using GetModuleHandle api;
+So the patch itself will be a DLL to inject into winlogon.exe process. When our DLL injected into the process , it should find offset of vulnerable memcpy first. In our tests, we see that it's always located at gpkcsp+0xE280 offset in Windows2003(SP1/SP2 ENG/TUR editions. We can calculate base address of gpkcsp module and add 0xE280 to find the vulnerable offset by using GetModuleHandle api;
 
 ![](https://github.com/trapmine/esteemaudit-patch/raw/main/patchadres.png)
 
